@@ -125,7 +125,7 @@
             $('#conteudoBusca a').remove();
             var query   = $('#inputBusca').val();
             var tamanho = $('#inputBusca').val().length;
-            if( tamanho > 3){
+            if( tamanho > 2){
                 $.ajax({                
                     url:"{{ route('buscaItensDaPPU') }}",            
                     type:"GET",                

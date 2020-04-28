@@ -15,13 +15,13 @@ use App\Http\Controllers\BuscaController;
 
 Route::get('/', function () {
     return view('dashboard');
-})->middleware('auth');
+});//->middleware('auth');
 
 Auth::routes();
 
 Route::get('/rdo/criar', function() {
     return view('rdo/criar');
-})->name('criar_rdo');
+});
 
 // rota para busca ajax
 Route::get('/busca/itens', 'BuscaController@itensAjax')->name('buscaItensDaPPU');

@@ -14,6 +14,7 @@ class TestPPUSPopulation extends Migration
      */
     public function up()
     {
+        /*
         //cria empresa fake
         DB::statement("
         INSERT INTO empresas(id, razao, cnpj, contato, telefone) VALUES
@@ -55,12 +56,12 @@ class TestPPUSPopulation extends Migration
 
         DB::statement("
         INSERT INTO ppus(id, item, descricao, um, quantidade, valor, contrato_id) VALUES
-        (5, 15, 'Higieniz de Reserv c/Capac até 2000L-COA', 'UN', 36, 289.75, 2)");
+        (6, 15, 'Higieniz de Reserv c/Capac até 2000L-COA', 'UN', 36, 289.75, 2)");
 
         DB::statement("
         INSERT INTO ppus(id, item, descricao, um, quantidade, valor, contrato_id) VALUES
-        (5, 18, 'Serv manut predial (civil e hidro)-COA', 'MES', 24, 12448.56, 2)");
-
+        (7, 18, 'Serv manut predial (civil e hidro)-COA', 'MES', 24, 12448.56, 2)");
+        */
     }
 
     /**

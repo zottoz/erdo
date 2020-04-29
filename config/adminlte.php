@@ -67,8 +67,8 @@ return [
     'usermenu_enabled' => true,
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => true,
-    'usermenu_desc' => true,
+    'usermenu_image' => false,
+    'usermenu_desc' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -123,7 +123,7 @@ return [
     |
     */
 
-    'sidebar_mini' => true,
+    'sidebar_mini' => false,
     'sidebar_collapse' => false,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
@@ -209,7 +209,7 @@ return [
 
     'menu' => [
         [
-            'text' => 'search',
+            'text' => 'Busca geral',
             'search' => true,
             'topnav' => true,
         ],
@@ -226,19 +226,24 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
-            'text'    => 'R.D.O.',
+            'text' => 'R.D.O',
+            'url'  => 'admin/settings',
+            'icon' => 'fas fa-fw fa-folder',
+        ],
+        [
+            'text'    => 'Cadastros',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'Criar',
+                    'text' => 'Empresa',
                     'url'  => '/rdo/criar',
                 ],
                 [
-                    'text' => 'Alterar',
+                    'text' => 'Contrato',
                     'url'  => '#',
                 ],                
                 [
-                    'text' => 'Excluir',
+                    'text' => 'PPus',
                     'url'  => '#',
                 ],
             ],

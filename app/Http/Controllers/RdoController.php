@@ -4,17 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class EmpresaController extends Controller
+class RdoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return view('empresa/listar');
+        if($request->get('q'))
+        {
+            return view('rdo/resultadoBusca')->with('resultado',$request->get('q'));
+        }
+
+        return view('/rdo/criar');
     }
 
     /**
@@ -25,7 +30,6 @@ class EmpresaController extends Controller
     public function create()
     {
         //
-        return view('empresa/novo');
     }
 
     /**
@@ -37,7 +41,6 @@ class EmpresaController extends Controller
     public function store(Request $request)
     {
         //
-
     }
 
     /**

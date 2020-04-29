@@ -19,7 +19,7 @@ $('#example1').DataTable({
 </script>
 @stop
 
-@section('title', 'Dashboard | Lara Admin')
+@section('title', 'Dashboard')
 @section('content_header')
     <h1>Dashboard</h1>
 @stop
@@ -81,7 +81,7 @@ $('#example1').DataTable({
               <div class="icon">
                 <i class="ion ion-alert-circled"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="#" class="small-box-footer">Mais informações<i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

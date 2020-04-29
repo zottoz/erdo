@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "inputmask": "^5.0.3",
-        "ionicons": "^5.0.1"
+        "ionicons": "^5.0.1",
+        "toastr": "^2.1.4"
     }
 }

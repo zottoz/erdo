@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Empresa;
+use Illuminate\Database\Eloquent\Model;
 
 class EmpresaController extends Controller
 {
@@ -36,7 +38,21 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validacao = $request->validate(
+            [
+                'cnpj'      => 'bail|required',
+                'razao'     => 'required',
+                'contato'   => 'required',
+                'telefone'  => 'required'
+        ]);
+
+        if($validacao)
+        {
+            $empresa = Empresa::create($request->all());
+            notify()->success('Empresa foi gravada com sucesso!');
+            return back()->withSuccess('ok');
+        }
+        return back()->withInput();
 
     }
 

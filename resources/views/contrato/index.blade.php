@@ -67,9 +67,10 @@ $('#tabela1').DataTable({
       "info": false,
       "autoWidth": false,
       "responsive": true,
+      "pageLength": 5,
       language: {
         "search": "Busca:",
-        "zeroRecords":    "Sem resultados"
+        "zeroRecords":    "Sem resultados",
     }
 });
 </script>

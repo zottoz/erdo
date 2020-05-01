@@ -16,59 +16,54 @@
                             <div class="form-group row">
                                 <label for="inputContrato" class="col-sm-2 col-form-label">Contrato:</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control form-control-sm">
-                                        <option>460000111</option>
-                                        <option>460000222</option>
-                                        <option>460000333</option>
-                                        <option>111111111</option>
-                                        <option>222222222</option>
+                                    <select class="form-control form-control-sm" id="inputContrato">
+                                        <option value=""></option>
+                                    @foreach($contratos as $contrato)
+                                        <option value="{{$contrato->id}}">{{$contrato->numero}}</option>
+                                    @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputContrato" class="col-sm-2 col-form-label">Empresa:</label>
+                                <label for="" class="col-sm-2 col-form-label">Empresa:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control form-control-sm" id="inputContrato"disabled value="Enrolação Generalizada Ltda">
+                                    <input type="text" class="form-control form-control-sm" id="inputEmpresa" disabled>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputContrato" class="col-sm-2 col-form-label">Objeto:</label>
+                                <label for="" class="col-sm-2 col-form-label">Objeto:</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control form-control-sm" id="objeto" rows="2" disabled>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque beatae quas at recusandae tenetur laudantium sequi tempore voluptatum odit. Beatae adipisci odit quos magnam facere ullam quidem eius maiores unde.
-                                    </textarea>
+                                    <textarea class="form-control form-control-sm" id="inputObjeto" rows="2" disabled></textarea>
                                 </div>
                             </div>
                     </div><!-- fim lado direito -->
 
                     <div class="col-sm-6"><!-- lado esquerdo -->
                             <div class="form-group row">
-                                <label for="inputContrato" class="col-sm-4 col-form-label">Local:</label>
+                                <label for="" class="col-sm-4 col-form-label">Local:</label>
                                 <div class="col-sm-5">
-                                <select class="form-control form-control-sm">
-                                        <option>Coari AM</option>
-                                        <option>Manaus AM</option>
-                                        <option>Belém PA</option>
-                                        <option>São Luis MA</option>
+                                <select class="form-control form-control-sm" name="inputLocal">
+                                        <option value="Coari AM">Coari AM</option>
+                                        <option value="Manaus AM">Manaus AM</option>
+                                        <option value="Belém PA">Belém PA</option>
+                                        <option value="São Luis MA">São Luis MA</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputContrato" class="col-sm-4 col-form-label">Tempo:</label>
+                                <label for="" class="col-sm-4 col-form-label">Tempo:</label>
                                 <div class="col-sm-5">
-                                    <select class="form-control form-control-sm">
-                                        <option>Bom</option>
-                                        <option>Ruim</option>
-                                        <option>Chuva</option>
-                                        <option>Tempestade</option>
-                                        <option>Quente</option>
+                                    <select class="form-control form-control-sm" name="inputTempo">
+                                        <option value="Bom">Bom</option>
+                                        <option value="Ruim">Ruim</option>
+                                        <option value="Péssimo">Péssimo</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputContrato" class="col-sm-4 col-form-label">Mão-de-obra:</label>
+                                <label for="" class="col-sm-4 col-form-label">Mão-de-obra:</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control form-control-sm" id="inputMO">
+                                    <input type="text" class="form-control form-control-sm" id="inputMaoDeObra">
                                 </div>
                             </div>
                     </div><!-- fim lado esquerdo -->
@@ -86,6 +81,7 @@
                 </div>
 
 <br/><br/>
+
                 <!-- itens selecinados p RDO -->
                 <table class="table table-striped table-sm" id="tabelaItens">
                   <thead>
@@ -119,9 +115,11 @@
 @section('js')
 
 <script type="text/javascript">
-    $(document).ready(function () {
 
-        $('#inputBusca').on('keyup',function() {
+    $(document).ready(function () {
+        /* busca os itens da busca de determinado contrato
+           gera uma lista dinamica com os itens numa tabela */ 
+        $('#inputBusca').on('keyup click',function() {
             $('#conteudoBusca a').remove();
             var query   = $('#inputBusca').val();
             var tamanho = $('#inputBusca').val().length;
@@ -146,9 +144,26 @@
                             $('#conteudoBusca').append(item);
                         }); // fim forEach
                     }
-                })
+                });
             }
-        });//fim busca-Ajax
+        });//------ fim busca de itens na busca
+
+        /* busca dados do contrato selecionado
+         */ 
+        $('#inputContrato').on('change', function(){
+            var id = $(this).val();
+            if(!id) return ;            
+            $.ajax({                
+                    url:"{{ route('buscaDadosContrato') }}",            
+                    type:"GET",                
+                    data:{'termo': id},                
+                    success:function (data) {
+                        $('#inputObjeto').val(data[0]);
+                        $('#inputEmpresa').val(data[1]);
+                    }
+            });
+
+        });
 
         //insere na tabela os valores selecionados
         $('#conteudoBusca').on('click', '.itemSelecionado', function(e){ 
@@ -206,3 +221,4 @@
 
 </style>
 @stop
+

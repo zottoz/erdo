@@ -15,6 +15,7 @@ class PpuController extends Controller
     public function index()
     {
         //
+        return view('ppu/index');
     }
 
     /**

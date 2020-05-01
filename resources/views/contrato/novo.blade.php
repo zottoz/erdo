@@ -12,10 +12,19 @@
         <!-- form start -->
         <form class="form-horizontal" action="{{ route('contrato.gravar') }}" method="POST">
         @csrf
-        <input name="empresa_id" type="hidden" value="2">
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Empresa:</label>
+                            <div class="col-sm-6">
+                                <select name="empresa_id">
+                                @foreach($empresas as $empresa)
+                                    <option value="{{$empresa->id}}">{{$empresa->razao}}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label">Número:</label>
                             <div class="col-sm-6">

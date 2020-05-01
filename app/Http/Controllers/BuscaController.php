@@ -4,19 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Database\Eloquent\Model;
 
 use App\Contrato;
+use App\Empresa;
 use App\Ppu;
+
 
 class BuscaController extends Controller
 {
     // retornar os dados da busca por item da ppu
-    public function itensAjax2($contrato = 2)
-    {
-        $itens = Contrato::find($contrato)->itensPpu;
-        return response()->json($itens, 201);
-    }
-
     public function itensAjax(Request $request)
     {
         if($request->ajax())
@@ -33,5 +30,26 @@ class BuscaController extends Controller
             }
 
         }
+    }
+
+    // retornar os dados da busca por item da ppu
+    public function dadosAjax(Request $request)
+    {
+
+        if($request->ajax())
+        {
+            $contrato = Contrato::find($request->termo);
+
+            if($contrato instanceof Model)
+            {
+                return response()->json([$contrato->objeto, $contrato->empresa->razao], 200);
+            }
+            else
+            {
+                return response()->json(['Erro ao acessar os dados'],404);
+            }
+
+        }
+
     }
 }

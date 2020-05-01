@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Contrato;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use App\Contrato;
+use App\Empresa;
+
 
 class ContratoController extends Controller
 {
@@ -26,7 +28,8 @@ class ContratoController extends Controller
      */
     public function create()
     {
-        return view('contrato/novo');
+        $empresas = Empresa::all();
+        return view('contrato/novo')->with('empresas', $empresas);
     }
 
     /**

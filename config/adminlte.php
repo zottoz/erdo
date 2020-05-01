@@ -100,7 +100,7 @@ return [
     |
     */
 
-    'classes_body' => '',
+    'classes_body' => 'pace-bounce-*',
     'classes_brand' => '',
     'classes_brand_text' => '',
     'classes_content_header' => 'container-fluid',
@@ -223,12 +223,12 @@ return [
         [
             'text' => 'Relatórios',
             'url'  => 'relatorios',
-            'icon' => 'fas fa-fw fa-bug',
+            'icon' => 'fas fa-fw fa-print',
         ],
         [
             'text' => 'R.D.O',
-            'url'  => 'rdo/criar',
-            'icon' => 'fas fa-fw fa-flag',
+            'url'  => 'rdo/novo',
+            'icon' => 'fas fa-fw fa-file',
         ],
         [
             'text'    => 'Cadastros',
@@ -244,7 +244,7 @@ return [
                 ],                
                 [
                     'text' => 'PPus',
-                    'url'  => '/contrato/ppu',
+                    'url'  => '/contrato/ppu/novo',
                 ],
             ],
         ],
@@ -321,7 +321,7 @@ return [
         ],
         [
             'name' => 'Select2',
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
@@ -348,11 +348,11 @@ return [
         ],
         [
             'name' => 'Sweetalert2',
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => true,
+                    'asset' => false,
                     'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
                 ],
             ],

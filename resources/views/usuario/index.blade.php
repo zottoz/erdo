@@ -3,7 +3,7 @@
 @section('content')
 
 <h2>
-    {{ $resultado }}
+    index de Usuarios
 </h2>
 
 

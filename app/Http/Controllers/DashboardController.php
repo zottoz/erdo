@@ -3,20 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Empresa;
-use App\Contrato;
-use App\Ppu;
 
-class RdoController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-
+        //
+        return view('dashboard');
     }
 
     /**
@@ -26,8 +24,7 @@ class RdoController extends Controller
      */
     public function create()
     {
-        $contratos = Contrato::all();
-        return view('rdo/novo')->with('contratos', $contratos);
+        //
     }
 
     /**

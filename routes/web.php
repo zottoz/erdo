@@ -13,18 +13,34 @@
 
 use App\Http\Controllers\BuscaController;
 
+
+//Rota para autenticacao
 Auth::routes();
 
-Route::get('/', function () {
-    return view('dashboard');
-});//->middleware('auth');
+
+//Rota para Dashboard
+Route::get('/', 'DashboardController@index')->middleware('auth');
 
 
-Route::get('/rdo/criar', 'RdoController@index');
+//Rota para Usuarios
+Route::get('/user/settings', function(){
+    return view('usuario/configuracao');
+})->middleware('auth');
 
 
-// rota para busca ajax
-Route::get('/busca/itens', 'BuscaController@itensAjax')->name('buscaItensDaPPU');
+//Rota para R.D.O.
+Route::get('rdo', 'RdoController@index')->name('rdo')->middleware('auth');
+Route::get('rdo/novo', 'RdoController@create')->name('rdo.novo')->middleware('auth');
+Route::post('rdo/novo', 'RdoController@store')->name('rdo.gravar')->middleware('auth');
+
+
+
+//Rota para busca ajax
+Route::get('/busca/itensdappu',     'BuscaController@itensAjax')->name('buscaItensDaPPU');
+Route::get('/busca/dadoscontrato',  'BuscaController@dadosAjax')->name('buscaDadosContrato');
+
+//Rota para os relatorios
+Route::get('/relatorios', 'RelatorioController@index')->middleware('auth');
 
 
 //Rotas Empresa
@@ -44,3 +60,6 @@ Route::get('contrato/exibir/{id}',   'ContratoController@show')->name('contrato.
 Route::get('contrato/editar/{id}',   'ContratoController@edit')->name('contrato.editar')->middleware('auth');
 Route::post('contrato/editar/{id}',  'ContratoController@update')->name('contrato.alterar')->middleware('auth');
 Route::get('contrato/excluir/{id}',  'ContratoController@destroy')->name('contrato.excluir')->middleware('auth');
+
+//Rota para a PPU
+Route::get('/contrato/ppu/novo', 'PpuController@index')->middleware('auth');

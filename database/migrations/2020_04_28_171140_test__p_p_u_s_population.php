@@ -32,35 +32,36 @@ class TestPPUSPopulation extends Migration
         DB::statement("
         INSERT INTO contratos(id, numero, objeto, inicio, fim, empresa_id) VALUES
         (3, '4600001111', 'servicos gerais', '2020-4-4', '2021-4-4', 20)");
+        */
 
         //cria os itens da ppu fake
         DB::statement("
         INSERT INTO ppus(id, item, descricao, um, quantidade, valor, contrato_id) VALUES
-        (1, 1, 'Limp e Conserv de Áreas Internas-COA', 'MES', 24, 2658, 2)");
+        (1, 1, 'Limp e Conserv de Áreas Internas-COA', 'MES', 24, 2658, 1)");
 
         DB::statement("
         INSERT INTO ppus(id, item, descricao, um, quantidade, valor, contrato_id) VALUES
-        (2, 2, 'Limp e Consv Áreas Livres e Externas-COA', 'MES', 24, 2100, 2)");
+        (2, 2, 'Limp e Consv Áreas Livres e Externas-COA', 'MES', 24, 2100, 1)");
 
         DB::statement("
         INSERT INTO ppus(id, item, descricao, um, quantidade, valor, contrato_id) VALUES
-        (3, 3, 'Jardinagem/Manut. Paisagística-COA', 'MES', 24, 2658, 2)");
+        (3, 3, 'Jardinagem/Manut. Paisagística-COA', 'MES', 24, 2658, 1)");
 
         DB::statement("
         INSERT INTO ppus(id, item, descricao, um, quantidade, valor, contrato_id) VALUES
-        (4, 6, 'Roçagem de Vegetação Alta-COA', 'M2', 600000, 0.37, 2)");
+        (4, 6, 'Roçagem de Vegetação Alta-COA', 'M2', 600000, 0.37, 1)");
 
         DB::statement("
         INSERT INTO ppus(id, item, descricao, um, quantidade, valor, contrato_id) VALUES
-        (5, 12, 'Serv de Desinset Desrat', 'MES', 24, 1000, 2)");
+        (5, 12, 'Serv de Desinset Desrat', 'MES', 24, 1000, 1)");
 
         DB::statement("
         INSERT INTO ppus(id, item, descricao, um, quantidade, valor, contrato_id) VALUES
-        (6, 15, 'Higieniz de Reserv c/Capac até 2000L-COA', 'UN', 36, 289.75, 2)");
+        (6, 15, 'Higieniz de Reserv c/Capac até 2000L-COA', 'UN', 36, 289.75, 1)");
 
         DB::statement("
         INSERT INTO ppus(id, item, descricao, um, quantidade, valor, contrato_id) VALUES
-        (7, 18, 'Serv manut predial (civil e hidro)-COA', 'MES', 24, 12448.56, 2)");
+        (7, 18, 'Serv manut predial (civil e hidro)-COA', 'MES', 24, 12448.56, 1)");
         */
     }
 

@@ -24,15 +24,23 @@ Route::get('/rdo/criar', 'RdoController@index');
 
 
 // rota para busca ajax
-Route::get('/busca/itens', 'BuscaController@itensAjax')
-            ->name('buscaItensDaPPU');
-//            ->middleware('auth');
+Route::get('/busca/itens', 'BuscaController@itensAjax')->name('buscaItensDaPPU');
+
 
 //Rotas Empresa
-Route::get('empresa/novo',       'EmpresaController@create')->middleware('auth');
-Route::post('empresa/novo',      'EmpresaController@store')->middleware('auth');
+Route::get('empresa',               'EmpresaController@index')->name('empresa')->middleware('auth');
+Route::get('empresa/novo',          'EmpresaController@create')->name('empresa.novo')->middleware('auth');
+Route::post('empresa/novo',         'EmpresaController@store')->name('empresa.gravar')->middleware('auth');
+Route::get('empresa/exibir/{id}',   'EmpresaController@show')->name('empresa.exibir')->middleware('auth');
+Route::get('empresa/editar/{id}',   'EmpresaController@edit')->name('empresa.editar')->middleware('auth');
+Route::post('empresa/editar/{id}',  'EmpresaController@update')->name('empresa.alterar')->middleware('auth');
+Route::get('empresa/excluir/{id}',  'EmpresaController@destroy')->name('empresa.excluir')->middleware('auth');
 
-Route::get('empresa/exibir',     'EmpresaController@show')->middleware('auth');
-Route::get('empresa/editar/:id', 'EmpresaController@show')->middleware('auth');
-Route::get('empresa/excluir',    'EmpresaController@destroy')->middleware('auth');
-Route::get('empresa/listar',     'EmpresaController@index')->middleware('auth');
+//Rotas Contratos
+Route::get('contrato',               'ContratoController@index')->name('contrato')->middleware('auth');
+Route::get('contrato/novo',          'ContratoController@create')->name('contrato.novo')->middleware('auth');
+Route::post('contrato/novo',         'ContratoController@store')->name('contrato.gravar')->middleware('auth');
+Route::get('contrato/exibir/{id}',   'ContratoController@show')->name('contrato.exibir')->middleware('auth');
+Route::get('contrato/editar/{id}',   'ContratoController@edit')->name('contrato.editar')->middleware('auth');
+Route::post('contrato/editar/{id}',  'ContratoController@update')->name('contrato.alterar')->middleware('auth');
+Route::get('contrato/excluir/{id}',  'ContratoController@destroy')->name('contrato.excluir')->middleware('auth');

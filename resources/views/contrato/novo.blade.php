@@ -6,37 +6,38 @@
     <!-- Horizontal Form -->
     <div class="card card-info">
         <div class="card-header">
-        <h3 class="card-title">Cadastro de Empresa</h3>
+        <h3 class="card-title">Cadastro de Contrato</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form class="form-horizontal" action="{{ route('empresa.gravar') }}" method="POST">
+        <form class="form-horizontal" action="{{ route('contrato.gravar') }}" method="POST">
         @csrf
+        <input name="empresa_id" type="hidden" value="2">
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group row">
-                            <label for="inputCNPJ" class="col-sm-2 col-form-label">CNPJ:</label>
+                            <label for="" class="col-sm-2 col-form-label">Número:</label>
                             <div class="col-sm-6">
-                                <input type="text" id="inputCNPJ" class="form-control @error('cnpj') is-invalid @enderror" name="cnpj" value="{{ old('cnpj') }}">
+                                <input type="text" class="form-control @error('numero') is-invalid @enderror" name="numero" value="{{ old('numero') }}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputRazao" class="col-sm-2 col-form-label">Razão Social:</label>
+                            <label for="" class="col-sm-2 col-form-label">Objeto:</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control @error('razao') is-invalid @enderror" id="inputRazao" name="razao" value="{{ old('razao') }}">
+                                <input type="text" class="form-control @error('objeto') is-invalid @enderror" name="objeto" value="{{ old('objeto') }}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputContato" class="col-sm-2 col-form-label">Contato:</label>
+                            <label for="" class="col-sm-2 col-form-label">Inicio:</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control @error('contato') is-invalid @enderror" id="inputContato" name="contato" value="{{ old('contato') }}">
+                                <input type="date" class="form-control @error('inicio') is-invalid @enderror" name="inicio" value="{{ old('inicio') }}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputTelefone" class="col-sm-2">Telefone:</label>
+                            <label for="" class="col-sm-2">Fim:</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control @error('telefone') is-invalid @enderror" id="inputTelefone" name="telefone" value="{{ old('telefone') }}"> 
+                                <input type="date" class="form-control @error('fim') is-invalid @enderror" name="fim" value="{{ old('fim') }}"> 
                             </div>
                         </div>
                     </div>
@@ -46,7 +47,7 @@
 
             <div class="card-footer">
                 <button type="submit" class="btn btn-outline-primary" style="width: 300px">Gravar</button>
-                <a class="btn btn-default float-right" href="{{route('empresa')}}">Cancelar</a>
+                <a class="btn btn-default float-right" href="{{route('contrato')}}">Cancelar</a>
             </div>
             <!-- /.card-footer -->
             

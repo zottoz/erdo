@@ -217,18 +217,18 @@ return [
         ['header' => 'Meu Menu'],
         [
             'text' => 'Meus Dados',
-            'url'  => 'admin/settings',
+            'url'  => 'user/settings',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'Troca Senha',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Relatórios',
+            'url'  => 'relatorios',
+            'icon' => 'fas fa-fw fa-bug',
         ],
         [
             'text' => 'R.D.O',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-folder',
+            'url'  => 'rdo/criar',
+            'icon' => 'fas fa-fw fa-flag',
         ],
         [
             'text'    => 'Cadastros',
@@ -236,15 +236,15 @@ return [
             'submenu' => [
                 [
                     'text' => 'Empresa',
-                    'url'  => '/rdo/criar',
+                    'url'  => '/empresa',
                 ],
                 [
                     'text' => 'Contrato',
-                    'url'  => '#',
+                    'url'  => '/contrato',
                 ],                
                 [
                     'text' => 'PPus',
-                    'url'  => '#',
+                    'url'  => '/contrato/ppu',
                 ],
             ],
         ],

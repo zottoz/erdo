@@ -21,7 +21,7 @@ class CreateContratosTable extends Migration
             $table->date('fim');
             $table->unsignedBigInteger('empresa_id');
             $table->timestamps();
-            // uma empresa tem varios contratos..
+            // uma empresa tem varios contratos...
             $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
         });
     }

@@ -16,11 +16,12 @@ class EmpresaController extends Controller
     public function index()
     {
         //
-        return view('empresa/listar');
+        $empresas = Empresa::all();
+        return view('empresa/index')->with('empresas',$empresas);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource..
      *
      * @return \Illuminate\Http\Response
      */
@@ -65,6 +66,12 @@ class EmpresaController extends Controller
     public function show($id)
     {
         //
+        $empresa = Empresa::find($id);
+
+        if($empresa instanceof Model)
+        {
+            return view('empresa/exibir')->with('empresa', $empresa);
+        }
     }
 
     /**
@@ -76,6 +83,10 @@ class EmpresaController extends Controller
     public function edit($id)
     {
         //
+        $empresa = Empresa::find($id);
+
+        return view('empresa/editar')->with('empresa',$empresa);
+
     }
 
     /**
@@ -87,7 +98,18 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $empresa = Empresa::find($id);
+        
+        $empresa->cnpj      = $request->input('cnpj');
+        $empresa->razao     = $request->input('razao');
+        $empresa->contato   = $request->input('contato');
+        $empresa->telefone  = $request->input('telefone');
+        
+        $empresa->save();
+
+        return redirect('empresa');
+
     }
 
     /**
@@ -96,8 +118,12 @@ class EmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         //
+            $empresa = Empresa::find($id);
+            $empresa->delete();
+            return redirect('empresa');
+
     }
 }

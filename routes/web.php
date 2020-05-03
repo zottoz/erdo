@@ -12,7 +12,7 @@
 */
 
 use App\Http\Controllers\BuscaController;
-use Illuminate\Support\Facades\Route
+use Illuminate\Support\Facades\Route;
 
 //Rota para autenticacao
 Auth::routes();

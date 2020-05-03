@@ -20,6 +20,9 @@ class BuscaController extends Controller
         {
             $itens = Ppu::where('descricao', 'like', '%'. $request->termo.'%')->get();
 
+            return response()->json($itens);
+            
+            /*
             if(count($itens)>0)
             {
                 return response()->json($itens, 200);
@@ -27,7 +30,7 @@ class BuscaController extends Controller
             else
             {
                 return response()->json([],404);
-            }
+            } */
 
         }
     }

@@ -62,4 +62,5 @@ Route::post('contrato/editar/{id}',  'ContratoController@update')->name('contrat
 Route::get('contrato/excluir/{id}',  'ContratoController@destroy')->name('contrato.excluir')->middleware('auth');
 
 //Rota para a PPU
-Route::get('/contrato/ppu/novo', 'PpuController@index')->middleware('auth');
+Route::get('/contrato/ppu/importar', 'PpuController@index')->name('ppu.novo');
+Route::post('/contrato/ppu/importar', 'PpuController@importar')->name('ppu.importar');

@@ -18,13 +18,8 @@ class BuscaController extends Controller
     {
         if($request->ajax())
         {
-            //$itens = Ppu::where('descricao', 'like', '%'. $request->termo.'%')->get();
-
-            $itens = Ppu::all();
-
-            return response()->json($itens);
+            $itens = Ppu::where('descricao', 'like', '%'. $request->termo.'%')->get();
             
-            /*
             if(count($itens)>0)
             {
                 return response()->json($itens, 200);
@@ -32,7 +27,7 @@ class BuscaController extends Controller
             else
             {
                 return response()->json([],404);
-            } */
+            } 
 
         }
     }

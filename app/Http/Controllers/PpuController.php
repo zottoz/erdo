@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Ppu;
 use Illuminate\Http\Request;
+use App\Ppu;
+use App\Contrato;
+use App\Imports\ppuImport;
+use Maatwebsite\Excel\Facades\Excel;
+//use Maatwebsite\Excel\Excel;
 
 class PpuController extends Controller
 {
@@ -14,8 +18,16 @@ class PpuController extends Controller
      */
     public function index()
     {
-        //
-        return view('ppu/index');
+        $contratos = Contrato::all();
+        return view('ppu/index')->with('contratos',$contratos);
+    }
+
+    public function importar(Request $request)
+    {
+        $arquivo = $request->file('arquivo');
+        $contrato = $request->input('contrato_id');
+        Excel::import(new ppuImport($contrato), $arquivo);
+        return back()->withSuccess('ok');
     }
 
     /**

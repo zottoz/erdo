@@ -244,7 +244,7 @@ return [
                 ],                
                 [
                     'text' => 'PPus',
-                    'url'  => '/contrato/ppu/novo',
+                    'url'  => '/contrato/ppu/importar',
                 ],
             ],
         ],

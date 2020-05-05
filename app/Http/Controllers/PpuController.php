@@ -27,6 +27,7 @@ class PpuController extends Controller
         $arquivo = $request->file('arquivo');
         $contrato = $request->input('contrato_id');
         Excel::import(new ppuImport($contrato), $arquivo);
+        notify()->success('A PPU foi importada com sucesso!');
         return back()->withSuccess('ok');
     }
 

@@ -18,12 +18,8 @@ class ppuImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
     
-        var_dump($row);
-
-        if($row["item"]==""){
-            return ;
-        }
-
+        if(empty($row["item"])) return;
+        
         return new Ppu([
             'id'            => 0,
            'item'           => $row["item"],
@@ -32,6 +28,6 @@ class ppuImport implements ToModel, WithHeadingRow
            'quantidade'     => $row["quantidade"],
            'valor'          => $row["valor"],
            'contrato_id'   => $this->contrato_id
-           ]);
+        ]);
     }
 }

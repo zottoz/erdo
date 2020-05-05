@@ -17,10 +17,8 @@ use Illuminate\Support\Facades\Route;
 //Rota para autenticacao
 Auth::routes();
 
-
 //Rota para Dashboard
 Route::get('/', 'DashboardController@index')->middleware('auth');
-
 
 //Rota para Usuarios
 Route::get('/user/settings', function(){
@@ -33,15 +31,12 @@ Route::get('rdo', 'RdoController@index')->name('rdo')->middleware('auth');
 Route::get('rdo/novo', 'RdoController@create')->name('rdo.novo')->middleware('auth');
 Route::post('rdo/novo', 'RdoController@store')->name('rdo.gravar')->middleware('auth');
 
-
-
 //Rota para busca ajax
 Route::get('/busca/itensdappu',     'BuscaController@itensAjax')->name('buscaItensDaPPU');
 Route::get('/busca/dadoscontrato',  'BuscaController@dadosAjax')->name('buscaDadosContrato');
 
 //Rota para os relatorios
 Route::get('/relatorios', 'RelatorioController@index')->middleware('auth');
-
 
 //Rotas Empresa
 Route::get('empresa',               'EmpresaController@index')->name('empresa')->middleware('auth');
@@ -62,5 +57,5 @@ Route::post('contrato/editar/{id}',  'ContratoController@update')->name('contrat
 Route::get('contrato/excluir/{id}',  'ContratoController@destroy')->name('contrato.excluir')->middleware('auth');
 
 //Rota para a PPU
-Route::get('/contrato/ppu/importar', 'PpuController@index')->name('ppu.novo');
+Route::get('/contrato/ppu/importar', 'PpuController@index')->name('ppu.importar');
 Route::post('/contrato/ppu/importar', 'PpuController@importar')->name('ppu.importar');

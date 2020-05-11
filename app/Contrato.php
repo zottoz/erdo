@@ -17,9 +17,16 @@ class Contrato extends Model
         return $this->belongsTo(Empresa::class);
     }
 
+
     /* retorna os itens da ppu */
     public function itensPpu()
     {
         return $this->hasMany(Ppu::class);
+    }
+    
+    /* retorna os rdos do contrato */
+    public function rdos()
+    {
+        return $this->hasMany(Rdo::class);
     }
 }

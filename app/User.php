@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Rdo;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role',
     ];
 
     /**
@@ -40,12 +41,22 @@ class User extends Authenticatable
     /* configura usurio */
     public function adminlte_image()
     {
-        return 'https://picsum.photos/300/300';
+        return 0;
     }
 
     public function adminlte_desc()
     {
-        return 'That\'s a nice guy';
+        return 0;
     }
 
+    public function rdoscriados()
+    {
+        return $this->hasMany(Rdo::class);
+    }
+
+    public function rdosautorizados()
+    {
+        return $this->hasMany(Rdo::class);
+    }
+    
 }

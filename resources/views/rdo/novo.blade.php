@@ -10,13 +10,14 @@
         <!-- /.card-header -->
         <!-- form start -->
         <form class="form-horizontal">
+        @csrf
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-6"><!-- lado direito -->
                             <div class="form-group row">
                                 <label for="inputContrato" class="col-sm-2 col-form-label">Contrato:</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control form-control-sm" id="inputContrato">
+                                    <select class="form-control form-control-sm" id="inputContrato" name="contrato">
                                         <option value=""></option>
                                     @foreach($contratos as $contrato)
                                         <option value="{{$contrato->id}}">{{$contrato->numero}}</option>
@@ -42,7 +43,7 @@
                             <div class="form-group row">
                                 <label for="" class="col-sm-4 col-form-label">Local:</label>
                                 <div class="col-sm-5">
-                                <select class="form-control form-control-sm" name="inputLocal">
+                                <select class="form-control form-control-sm" id="inputLocal" name="localidade">
                                         <option value="Coari AM">Coari AM</option>
                                         <option value="Manaus AM">Manaus AM</option>
                                         <option value="Belém PA">Belém PA</option>
@@ -53,7 +54,7 @@
                             <div class="form-group row">
                                 <label for="" class="col-sm-4 col-form-label">Tempo:</label>
                                 <div class="col-sm-5">
-                                    <select class="form-control form-control-sm" name="inputTempo">
+                                    <select class="form-control form-control-sm" id="inputTempo" name="tempo">
                                         <option value="Bom">Bom</option>
                                         <option value="Ruim">Ruim</option>
                                         <option value="Péssimo">Péssimo</option>
@@ -63,7 +64,7 @@
                             <div class="form-group row">
                                 <label for="" class="col-sm-4 col-form-label">Mão-de-obra:</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control form-control-sm" id="inputMaoDeObra">
+                                    <input type="text" class="form-control form-control-sm" id="inputQndPessoas" name="qntpessoas">
                                 </div>
                             </div>
                     </div><!-- fim lado esquerdo -->
@@ -102,8 +103,8 @@
             </div><!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-success btn-sm" style="width: 300px">Criar</button>
-                <button type="submit" class="btn btn-default float-right">Cancelar</button>
+                <a href="#" class="btn btn-success btn-sm" style="width: 300px" id="criarRdo">Criar</button>
+                <a href="#" class="btn btn-default float-right">Cancelar</button>
             </div>
             <!-- /.card-footer -->
         </form>
@@ -180,17 +181,87 @@
             $('#conteudoBusca a').remove();
             $('#tabelaItens tbody:last').append(newRow);       
         }); 
+
         //apaga uma linha da tabela
         $("#tabelaItens").on("click", "#deleteButton", function() {
             $(this).closest("tr").remove();
         });
 
+        /* ==========================================================================================
+            Salva um RDO e as linhas da tabela
+            teste 1 com ajax 10-05-2020
+           ==========================================================================================
+        */
+        // converte as linhas em Json
+        function converteTabelaEmJson()
+        {
+            var itensDoRdo = new Array();
+            $('#tabelaItens tr').each(function(row, tr){
+                itensDoRdo[row]={
+                    "item" :        $(tr).find('td:eq(0)').text(),
+                    "quantidade":   $(tr).find('td').find('input').val()
+                }    
+            }); 
+            itensDoRdo.shift();  // remove o cabeçalho
+            return itensDoRdo;
+        }
+        // 
+        $('#criarRdo').on('click', function(event){
+            //event.preventDefault();
+
+            var dados       = {};
+            var contrato    = $('#inputContrato').val();
+            var local       = $('#inputLocal').val();
+            var qntpessoas  = $('#inputQndPessoas').val();
+            var tempo       = $('#inputTempo').val();
+
+            dados['itens'] = converteTabelaEmJson();
+            
+            info = 
+            {
+                'contrato'  : contrato,
+                'local'     : local,
+                'qntpessoas': qntpessoas,
+                'tempo'     : tempo
+            }
+
+            console.log(dados);
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({                
+                    url:"{{ route('rdo.gravar') }}",            
+                    type:"POST",                
+                    data: {'dados' : [
+                        info
+                    ] },
+                    //dataType: 'json',  
+                    //processData: false,              
+                    success:function (data) {
+                        console.log(data);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+            });
+
+            console.log(saida);
+        })
+
     }); //fim do document-ready
 </script>
-
+            <!-- NOTIFICACAO POP-UP -->
+            @notify_js
+            @notify_render
 @stop
 
 @section('css')
+            <!-- NOTIFICACAO POP-UP -->
+            @notify_css
 <style>
 /* The container <div> - needed to position the dropdown content */
 .dropdown {

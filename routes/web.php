@@ -29,11 +29,11 @@ Route::get('/user/settings', function(){
 //Rota para R.D.O.
 Route::get('rdo', 'RdoController@index')->name('rdo')->middleware('auth');
 Route::get('rdo/novo', 'RdoController@create')->name('rdo.novo')->middleware('auth');
-Route::post('rdo/novo', 'RdoController@store')->name('rdo.gravar')->middleware('auth');
+Route::post('rdo/novo', 'RdoController@store')->name('rdo.gravar');
 
 //Rota para busca ajax
-Route::get('/busca/itensdappu',     'BuscaController@itensAjax')->name('buscaItensDaPPU');
-Route::get('/busca/dadoscontrato',  'BuscaController@dadosAjax')->name('buscaDadosContrato');
+Route::get('/busca/itensdappu',     'BuscaController@itensAjax')->name('buscaItensDaPPU')->middleware('auth');
+Route::get('/busca/dadoscontrato',  'BuscaController@dadosAjax')->name('buscaDadosContrato')->middleware('auth');
 
 //Rota para os relatorios
 Route::get('/relatorios', 'RelatorioController@index')->middleware('auth');

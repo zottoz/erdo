@@ -15,4 +15,10 @@ class Ppu extends Model
     {
         return $this->belongsTo('App\Contrato', 'contrato_id');
     }
+
+    public function rdos()
+    {
+        return $this->belongsToMany(Rdo::class, 'rdo__ppus');
+    }
+
 }

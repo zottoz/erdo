@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Model;
 
 class Ppu extends Model
@@ -18,7 +19,23 @@ class Ppu extends Model
 
     public function rdos()
     {
-        return $this->belongsToMany(Rdo::class, 'rdo__ppus');
+        return $this->belongsToMany(Rdo::class, 'rdo_ppu');
+    }
+
+    public static function idItem($contratoId, $item)
+    {
+        $ppu = Ppu::where('contrato_id', $contratoId)->where('item', $item)->first();
+        if($ppu instanceof Model)
+        {
+            return $ppu->id;
+        }
+        else
+        {
+            throw new ModelNotFoundException('Erro: Item PPU inválido');
+
+            return false;
+
+        }
     }
 
 }

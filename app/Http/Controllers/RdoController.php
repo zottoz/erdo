@@ -48,30 +48,34 @@ class RdoController extends Controller
 
         if($request->ajax())
         {
-            $dados = json_decode($request->getContent(), false);
-            return response()->json($request->dados[0]) ;
 
-            //--------inicia aq
             $criadorId  =   Auth::id();
-            $numeroRDO  =   Rdo::latest()->first()->id + 1;
+            $numeroRDO  =   Rdo::count() + 2;
             $hoje       =   Carbon::now();
-            
-            
 
             $rdo = Rdo::create([
                 'numero'        => $numeroRDO,
                 'datainicio'    => $hoje,
-                'localidade'    => $dados['local'],
-                'tempo'         => 0,
-                'qntpessoas'    => 0,
-                'contrato_id'   => 5,
+                'localidade'    => $request->info[0],
+                'tempo'         => $request->info[1],
+                'qntpessoas'    => $request->info[2],
+                'contrato_id'   => $request->info[3],
                 'criador_id'    => $criadorId
             ]);
     
+            foreach($request->itens as $item)
+            {
+                Rdo_Ppu::create([
+                    'rdo_id'        => $rdo->id,
+                    'ppu_id'        => Ppu::idItem( $request->info[3], $item['item']),
+                    'quantidade'    => $item['quantidade']
+                ]);
+            }
+           
             if($rdo instanceof model)
             {
                 notify()->success('RDO criado com numero: ' . $numeroRDO );
-                return back()->withSuccess([$numeroRDO]);        
+                return back()->withSuccess(['ok']);        
             }
             else{
                 return back()->withErrors([]);

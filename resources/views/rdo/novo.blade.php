@@ -81,7 +81,7 @@
                     </div>
                 </div>
 
-<br/><br/>
+                <br/><br/>
 
                 <!-- itens selecinados p RDO -->
                 <table class="table table-striped table-sm" id="tabelaItens">
@@ -103,8 +103,8 @@
             </div><!-- /.card-body -->
 
             <div class="card-footer">
-                <a href="#" class="btn btn-success btn-sm" style="width: 300px" id="criarRdo">Criar</button>
-                <a href="#" class="btn btn-default float-right">Cancelar</button>
+                <a href="#" class="btn btn-success btn-sm" style="width: 300px" id="criarRdo">Criar</a>
+                <a href="#" class="btn btn-default float-right">Cancelar</a>
             </div>
             <!-- /.card-footer -->
         </form>
@@ -123,12 +123,18 @@
         $('#inputBusca').on('keyup click',function() {
             $('#conteudoBusca a').remove();
             var query   = $('#inputBusca').val();
+
+            //seleciona o contrato
+            var contratoId = $('#inputContrato').val();
+
+            console.log('Busca itens ajax' + contratoId);
+
             var tamanho = $('#inputBusca').val().length;
             if( tamanho > 2){
                 $.ajax({                
                     url:"{{ route('buscaItensDaPPU') }}",            
                     type:"GET",                
-                    data:{'termo':query},                
+                    data:{'termo':query, 'contratoId':contratoId},                
                     success:function (data) {
                         $('#conteudoBusca a').remove();
                         data.forEach(element => {
@@ -144,6 +150,9 @@
                             ));
                             $('#conteudoBusca').append(item);
                         }); // fim forEach
+                    },
+                    error: function(err) {
+                        console.log(err);
                     }
                 });
             }
@@ -178,7 +187,7 @@
             '<td><button class="btn btn-danger btn-sm" id="deleteButton">Excluir</button></td>'+
             '</tr>');   
             //cria nova linha
-            $('#conteudoBusca a').remove();
+            $('#conteudoBusca a').remove(); //apaga a lista
             $('#tabelaItens tbody:last').append(newRow);       
         }); 
 
@@ -205,27 +214,28 @@
             itensDoRdo.shift();  // remove o cabeçalho
             return itensDoRdo;
         }
-        // 
+        // limpa os campos
+        function limpaCampos()
+        {
+            $('#tabelaItens tbody').find('tr').each( function()
+            {
+                $(this).parents("tr").remove();
+            });
+        }
+
+
         $('#criarRdo').on('click', function(event){
             //event.preventDefault();
 
-            var dados       = {};
-            var contrato    = $('#inputContrato').val();
-            var local       = $('#inputLocal').val();
+            var itens       = {};
+            var contratoId  = $('#inputContrato').val();
+            var localidade  = $('#inputLocal').val();
             var qntpessoas  = $('#inputQndPessoas').val();
             var tempo       = $('#inputTempo').val();
 
-            dados['itens'] = converteTabelaEmJson();
-            
-            info = 
-            {
-                'contrato'  : contrato,
-                'local'     : local,
-                'qntpessoas': qntpessoas,
-                'tempo'     : tempo
-            }
+            info = [localidade, tempo, qntpessoas, contratoId];
 
-            console.log(dados);
+            itens = converteTabelaEmJson();    
 
             $.ajaxSetup({
                 headers: {
@@ -236,32 +246,29 @@
             $.ajax({                
                     url:"{{ route('rdo.gravar') }}",            
                     type:"POST",                
-                    data: {'dados' : [
-                        info
-                    ] },
+                    data: {'itens' : itens, 'info' : info },
                     //dataType: 'json',  
-                    //processData: false,              
+                    processData: true,              
                     success:function (data) {
                         console.log(data);
+                        limpaCampos();
                     },
                     error: function(error) {
                         console.log(error);
                     }
             });
 
-            console.log(saida);
         })
 
     }); //fim do document-ready
 </script>
-            <!-- NOTIFICACAO POP-UP -->
-            @notify_js
-            @notify_render
+
 @stop
 
 @section('css')
-            <!-- NOTIFICACAO POP-UP -->
-            @notify_css
+    <!-- NOTIFICACAO POP-UP -->
+    @notify_css
+
 <style>
 /* The container <div> - needed to position the dropdown content */
 .dropdown {

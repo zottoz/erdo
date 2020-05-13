@@ -34,6 +34,6 @@ class Rdo extends Model
 
     public function itens()
     {
-        return $this->belongsToMany(Ppu::class, 'rdo__ppus');
+        return $this->belongsToMany(Ppu::class, 'rdo_ppu');
     }
 }

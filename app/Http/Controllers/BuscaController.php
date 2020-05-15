@@ -60,4 +60,25 @@ class BuscaController extends Controller
         }
 
     }
+
+    // retornar a ppu de um contrato
+    public function ppuAjax(Request $request)
+    {
+
+        if($request->ajax())
+        {
+            $contrato = Contrato::find($request->contratoId);
+
+            if($contrato instanceof Model)
+            {
+                return response()->json($contrato->itensPpu, 200);
+            }
+            else
+            {
+                return response()->json('Erro ao acessar os dados',404);
+            }
+
+        }
+
+    }
 }

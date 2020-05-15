@@ -72,12 +72,18 @@
                 <hr/>
                 <!-- botao de busca e dropdown -->
                 <div class="row">
-                    <div class="col-sm-12">
-                            <div class="form-group row">
-                                <div id="conteudoBusca" class="dropdown dropdown-content">
-                                    <input type="text" class="form-control" id="inputBusca" placeholder="busca.." >
-                                </div>
+                    <div class="col-sm-10">
+                        <div class="form-group row">
+                            <div id="conteudoBusca" class="dropdown dropdown-content">
+                                <input type="text" class="form-control" id="inputBusca" placeholder="busca itens.." >
                             </div>
+                        </div>
+                    </div>
+                    <div class="btn-quickview"> 
+                        <a href="#" id="abrePPU"> <!-- data-toggle="modal" data-target="#modal-itens" -->
+                            <i class="fa fa-search-plus" aria-hidden="true">
+                            </i> Ver PPU
+                        </a> 
                     </div>
                 </div>
 
@@ -99,7 +105,6 @@
                   </tbody>
                 </table>
 
-
             </div><!-- /.card-body -->
 
             <div class="card-footer">
@@ -110,6 +115,43 @@
         </form>
     </div>
     <!-- /.card -->
+
+<!-- ------------------------------------------------------------------------ -->
+    <!-- MODAL exibe itens da PPU -->
+    <div class="modal fade" id="itensModal">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Itens da PPU</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body"> <!-- tabela com os itens -->
+                <!-- CONTEUDO MODAL -->
+                <table class="table table-bordered table-striped" id="tabelaModal">
+                    <thead>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>Descrição</th>
+                        <th>Und M</th>
+                        <th>Quantidade</th>
+                        <th>Valor</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
 
 @stop
 
@@ -198,7 +240,7 @@
 
         /* ==========================================================================================
             Salva um RDO e as linhas da tabela
-            teste 1 com ajax 10-05-2020
+            Modificado em: 10-05-2020
            ==========================================================================================
         */
         // converte as linhas em Json
@@ -222,7 +264,6 @@
                 $(this).parents("tr").remove();
             });
         }
-
 
         $('#criarRdo').on('click', function(event){
             //event.preventDefault();
@@ -258,9 +299,51 @@
                     }
             });
 
-        })
+        });
+
+        /* ==========================================================================================
+            Busca itens da PPU e preenche no MODAL
+            Modificado em: 13-05-2020
+           ==========================================================================================
+        */
+        $('#abrePPU').on('click', function(e){
+            e.preventDefault();
+            var contratoId  = $('#inputContrato').val();
+            var linhas = '';
+            $('#tabelaModal tbody').empty();
+            $.ajax({                
+                    url:"{{ route('buscaPPUContrato') }}",            
+                    type:"GET",                
+                    data: {'contratoId' : contratoId },
+                    dataType: 'json',  
+                    processData: true,              
+                    success:function (data) {
+                        data.forEach( function(item){
+                            var linha = '<tr>' + 
+                                        '<td>' + item.item + '</td>' +
+                                        '<td>' + item.descricao + '</td>' +
+                                        '<td>' + item.um + '</td>' +
+                                        '<td>' + item.quantidade + '</td>' +
+                                        '<td>' + item.valor + '</td>' +                                        
+                                        '</tr>';
+                            linhas = linhas + linha ;
+                        });
+                        $('#tabelaModal tbody').append(linhas);
+                        $('#itensModal').modal('toggle');
+                    },
+                    error: function(err) {
+                        console.log(err.status +' '+err.statusText);
+                    }
+            });
+
+        });
+
+
+
 
     }); //fim do document-ready
+
+
 </script>
 
 @stop

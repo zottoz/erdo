@@ -34,7 +34,7 @@ Route::post('rdo/novo', 'RdoController@store')->name('rdo.gravar');
 //Rota para busca ajax
 Route::get('/busca/itensdappu',     'BuscaController@itensAjax')->name('buscaItensDaPPU')->middleware('auth');
 Route::get('/busca/dadoscontrato',  'BuscaController@dadosAjax')->name('buscaDadosContrato')->middleware('auth');
-
+Route::get('/busca/ppu',            'BuscaController@ppuAjax'  )->name('buscaPPUContrato');
 //Rota para os relatorios
 Route::get('/relatorios', 'RelatorioController@index')->middleware('auth');
 

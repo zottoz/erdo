@@ -25,6 +25,9 @@ class Ppu extends Model
     public static function idItem($contratoId, $item)
     {
         $ppu = Ppu::where('contrato_id', $contratoId)->where('item', $item)->first();
+        //clock() log de saida
+        clock($ppu);
+        
         if($ppu instanceof Model)
         {
             return $ppu->id;

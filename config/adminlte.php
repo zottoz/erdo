@@ -227,7 +227,7 @@ return [
         ],
         [
             'text' => 'R.D.O',
-            'url'  => 'rdo/novo',
+            'url'  => '/rdo',
             'icon' => 'fas fa-fw fa-file',
         ],
         [
@@ -252,14 +252,17 @@ return [
         [
             'text'       => 'RDO´s pendentes',
             'icon_color' => 'red',
+            'url'        => '/rdo/q?=pendentes'
         ],
         [
             'text'       => 'RDO´s em aprovação',
             'icon_color' => 'yellow',
+            'url'        => '/rdo/q?=aprovacao'
         ],
         [
             'text'       => 'RDO´s excluídos',
             'icon_color' => 'aqua',
+            'url'        => '/rdo/q?=excluidos'
         ],
     ],
 

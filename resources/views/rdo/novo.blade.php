@@ -109,7 +109,7 @@
 
             <div class="card-footer">
                 <a href="#" class="btn btn-success btn-sm" style="width: 300px" id="criarRdo">Criar</a>
-                <a href="#" class="btn btn-default float-right">Cancelar</a>
+                <a href="{{ route('rdo') }}" class="btn btn-default float-right">Cancelar</a>
             </div>
             <!-- /.card-footer -->
         </form>
@@ -256,17 +256,10 @@
             itensDoRdo.shift();  // remove o cabeçalho
             return itensDoRdo;
         }
-        // limpa os campos
-        function limpaCampos()
-        {
-            $('#tabelaItens tbody').find('tr').each( function()
-            {
-                $(this).parents("tr").remove();
-            });
-        }
+
 
         $('#criarRdo').on('click', function(event){
-            //event.preventDefault();
+            event.preventDefault();
 
             var itens       = {};
             var contratoId  = $('#inputContrato').val();
@@ -288,11 +281,13 @@
                     url:"{{ route('rdo.gravar') }}",            
                     type:"POST",                
                     data: {'itens' : itens, 'info' : info },
-                    //dataType: 'json',  
+                    dataType: 'json',  
                     processData: true,              
                     success:function (data) {
                         console.log(data);
-                        limpaCampos();
+                        $('#tabelaItens tbody').empty();
+                        $('#inputQndPessoas').text = '';
+                        window.location.href = "{{ route('rdo')}}";
                     },
                     error: function(error) {
                         console.log(error);
@@ -337,21 +332,19 @@
             });
 
         });
-
+        /* ==========================================================================================
+        */
 
 
 
     }); //fim do document-ready
 
-
 </script>
+
 
 @stop
 
 @section('css')
-    <!-- NOTIFICACAO POP-UP -->
-    @notify_css
-
 <style>
 /* The container <div> - needed to position the dropdown content */
 .dropdown {

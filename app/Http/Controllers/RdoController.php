@@ -23,7 +23,9 @@ class RdoController extends Controller
      */
     public function index(Request $request)
     {
-
+        //
+        $rdos = Rdo::all();
+        return view('rdo.index')->with('rdos', $rdos);
     }
 
     /**
@@ -50,7 +52,7 @@ class RdoController extends Controller
         {
 
             $criadorId  =   Auth::id();
-            $numeroRDO  =   Rdo::count() + 2;
+            $numeroRDO  =   $request->info[3] . '00'.(Rdo::count() + 1);
             $hoje       =   Carbon::now();
 
             $rdo = Rdo::create([
@@ -74,8 +76,7 @@ class RdoController extends Controller
            
             if($rdo instanceof model)
             {
-                notify()->success('RDO criado com numero: ' . $numeroRDO );
-                return back()->withSuccess(['ok']);        
+                return response()->json('Rdo criado com sucesso', 200);       
             }
             else{
                 return back()->withErrors([]);
@@ -95,6 +96,9 @@ class RdoController extends Controller
     public function show($id)
     {
         //
+        $rdo = Rdo::find($id);
+
+        return view('rdo/exibir')->with('rdo', $rdo);
     }
 
     /**
@@ -129,5 +133,23 @@ class RdoController extends Controller
     public function destroy($id)
     {
         //
+
     }
+
+    // altera status do rdo.. autorizador
+    public function alteraStatus($id)
+    {
+        $rdo = Rdo::find($id);
+        if($rdo->autorizador_id)
+        {
+            $rdo->autorizador_id = null;
+        }
+        else
+        {
+            $rdo->autorizador_id = Auth::user()->id;
+        }
+        $rdo->save();
+        return redirect('rdo');
+    }
+
 }

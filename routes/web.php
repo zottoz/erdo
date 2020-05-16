@@ -27,16 +27,23 @@ Route::get('/user/settings', function(){
 
 
 //Rota para R.D.O.
-Route::get('rdo', 'RdoController@index')->name('rdo')->middleware('auth');
-Route::get('rdo/novo', 'RdoController@create')->name('rdo.novo')->middleware('auth');
-Route::post('rdo/novo', 'RdoController@store')->name('rdo.gravar');
+Route::get('rdo',                   'RdoController@index')->name('rdo')->middleware('auth');
+Route::get('rdo/novo',              'RdoController@create')->name('rdo.novo')->middleware('auth');
+Route::post('rdo/novo',             'RdoController@store')->name('rdo.gravar');
+Route::get('rdo/exibir/{id}',       'RdoController@show')->name('rdo.exibir')->middleware('auth');
+Route::get('rdo/excluir/{id}',      'RdoController@destroy')->name('rdo.excluir')->middleware('auth');
+Route::get('rdo/alterastatus/{id}', 'RdoController@alteraStatus')->name('rdo.alterastatus')->middleware('auth');
+
 
 //Rota para busca ajax
 Route::get('/busca/itensdappu',     'BuscaController@itensAjax')->name('buscaItensDaPPU')->middleware('auth');
 Route::get('/busca/dadoscontrato',  'BuscaController@dadosAjax')->name('buscaDadosContrato')->middleware('auth');
 Route::get('/busca/ppu',            'BuscaController@ppuAjax'  )->name('buscaPPUContrato');
+
+
 //Rota para os relatorios
 Route::get('/relatorios', 'RelatorioController@index')->middleware('auth');
+
 
 //Rotas Empresa
 Route::get('empresa',               'EmpresaController@index')->name('empresa')->middleware('auth');
@@ -47,6 +54,7 @@ Route::get('empresa/editar/{id}',   'EmpresaController@edit')->name('empresa.edi
 Route::post('empresa/editar/{id}',  'EmpresaController@update')->name('empresa.alterar')->middleware('auth');
 Route::get('empresa/excluir/{id}',  'EmpresaController@destroy')->name('empresa.excluir')->middleware('auth');
 
+
 //Rotas Contratos
 Route::get('contrato',               'ContratoController@index')->name('contrato')->middleware('auth');
 Route::get('contrato/novo',          'ContratoController@create')->name('contrato.novo')->middleware('auth');
@@ -55,6 +63,7 @@ Route::get('contrato/exibir/{id}',   'ContratoController@show')->name('contrato.
 Route::get('contrato/editar/{id}',   'ContratoController@edit')->name('contrato.editar')->middleware('auth');
 Route::post('contrato/editar/{id}',  'ContratoController@update')->name('contrato.alterar')->middleware('auth');
 Route::get('contrato/excluir/{id}',  'ContratoController@destroy')->name('contrato.excluir')->middleware('auth');
+
 
 //Rota para a PPU
 Route::get('/contrato/ppu/importar', 'PpuController@index')->name('ppu.importar');

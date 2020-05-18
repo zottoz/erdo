@@ -65,14 +65,18 @@ class RdoController extends Controller
                 'criador_id'    => $criadorId
             ]);
     
+            clock('rdo_model',$rdo);
+
             foreach($request->itens as $item)
             {
+                clock('ppu_idItem', Ppu::idItem( $request->info[3], $item['item']));
+                clock('antes do rdo_ppu_create');
                 Rdo_Ppu::create([
                     'rdo_id'        => $rdo->id,
                     'ppu_id'        => Ppu::idItem( $request->info[3], $item['item']),
                     'quantidade'    => $item['quantidade']
                 ]);
-
+                clock('depois do rdo_ppu_create');
             }
            
             if($rdo instanceof model)

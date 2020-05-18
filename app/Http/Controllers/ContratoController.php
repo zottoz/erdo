@@ -52,7 +52,7 @@ class ContratoController extends Controller
 
         if($validacao)
         {
-            $empresa = Contrato::create($request->all());
+            Contrato::create($request->all());
             notify()->success('Contrato gravado com sucesso!');
             return back()->withSuccess('ok');
         }

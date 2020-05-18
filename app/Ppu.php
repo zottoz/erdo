@@ -26,8 +26,6 @@ class Ppu extends Model
     {
         $ppu = Ppu::where('contrato_id', $contratoId)->where('item', $item)->get()->first();
 
-        clock($ppu);
-
         if($ppu instanceof Model)
         {
             return $ppu->id;

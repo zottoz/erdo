@@ -73,8 +73,6 @@ class RdoController extends Controller
                     'quantidade'    => $item['quantidade']
                 ]);
 
-                //clock() log Ppu
-                clock(Ppu::idItem( $request->info[3], $item['item']));
             }
            
             if($rdo instanceof model)

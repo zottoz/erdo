@@ -25,7 +25,7 @@ class BuscaController extends Controller
                 return response()->json([], 404); 
             }
 
-            $itens = Ppu::where('descricao', 'like', '%'. $request->termo . '%')
+            $itens = Ppu::where('descricao', 'ilike', '%'. $request->termo . '%')
                         ->where('contrato_id', $request->contratoId)->take(5)->get();
             
             if(count($itens)>0)

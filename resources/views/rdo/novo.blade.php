@@ -116,42 +116,37 @@
     </div>
     <!-- /.card -->
 
-<!-- ------------------------------------------------------------------------ -->
     <!-- MODAL exibe itens da PPU -->
     <div class="modal fade" id="itensModal">
         <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Itens da PPU</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Itens da PPU</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped" id="tabelaModal">
+                        <thead>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>Descrição</th>
+                            <th>Und M</th>
+                            <th>Quantidade</th>
+                            <th>Valor</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
             </div>
-            <div class="modal-body"> <!-- tabela com os itens -->
-                <!-- CONTEUDO MODAL -->
-                <table class="table table-bordered table-striped" id="tabelaModal">
-                    <thead>
-                    <tr>
-                        <th style="width: 10px">#</th>
-                        <th>Descrição</th>
-                        <th>Und M</th>
-                        <th>Quantidade</th>
-                        <th>Valor</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            </div>
-          </div>
-          <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
+    </div>
 
 @stop
 
@@ -160,16 +155,18 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        /* busca os itens da busca de determinado contrato
-           gera uma lista dinamica com os itens numa tabela */ 
+        /* =================================================================================== 
+            Busca os itens da busca de determinado contrato
+            gera uma lista dinamica com os itens numa tabela
+            Modificado em: 05/05/2020
+        ======================================================================================
+        */ 
         $('#inputBusca').on('keyup click',function() {
             $('#conteudoBusca a').remove();
             var query   = $('#inputBusca').val();
 
             //seleciona o contrato
             var contratoId = $('#inputContrato').val();
-
-            console.log('Busca itens ajax' + contratoId);
 
             var tamanho = $('#inputBusca').val().length;
             if( tamanho > 2){
@@ -228,8 +225,7 @@
             '<td><div class="col-4"><input type="text" id="qnt1" class="form-control form-control-sm"></div></td>'+
             '<td><button class="btn btn-danger btn-sm" id="deleteButton">Excluir</button></td>'+
             '</tr>');   
-            //cria nova linha
-            $('#conteudoBusca a').remove(); //apaga a lista
+            $('#conteudoBusca a').remove();
             $('#tabelaItens tbody:last').append(newRow);       
         }); 
 
@@ -248,12 +244,18 @@
         {
             var itensDoRdo = new Array();
             $('#tabelaItens tr').each(function(row, tr){
+                var itemAtual       = $(tr).find('td:eq(0)').text();
+                var quantidadeAtual = $(tr).find('td').find('input').val();
+                if(!quantidadeAtual)
+                {
+                    return [];
+                }
                 itensDoRdo[row]={
-                    "item" :        $(tr).find('td:eq(0)').text(),
-                    "quantidade":   $(tr).find('td').find('input').val()
+                    "item" :        itemAtual,
+                    "quantidade":   quantidadeAtual
                 }    
             }); 
-            itensDoRdo.shift();  // remove o cabeçalho
+            itensDoRdo.shift();
             return itensDoRdo;
         }
 
@@ -261,7 +263,7 @@
         $('#criarRdo').on('click', function(event){
             event.preventDefault();
 
-            var itens       = {};
+            var itens       = [];
             var contratoId  = $('#inputContrato').val();
             var localidade  = $('#inputLocal').val();
             var qntpessoas  = $('#inputQndPessoas').val();
@@ -270,6 +272,12 @@
             info = [localidade, tempo, qntpessoas, contratoId];
 
             itens = converteTabelaEmJson();    
+
+            if(itens.length==0)
+            {
+                alert('Preencher o RDO corretamente =)');
+                return ;
+            }
 
             $.ajaxSetup({
                 headers: {

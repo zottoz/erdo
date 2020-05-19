@@ -13,7 +13,10 @@ class Rdo_Ppu extends Model
     
     protected $table = 'rdo_ppu';
 
+
     protected $primaryKey = 'rdo_id';
+
+
 
 
 }

@@ -106,10 +106,20 @@ $('#tabela1').DataTable({
       "responsive": true,
       "processing": true,
       "serverSide": false,
-      language: {
-        "search": "Busca:",
+      "columns": [
+            null,
+            { "searchable": false },
+            { "searchable": false },
+            { "searchable": false },
+            { "searchable": false },
+            { "searchable": false },
+            null,
+            { "searchable": false }
+      ],
+      "language": {
+        "search": "Número do RDO / Localidade:",
         "zeroRecords":    "Sem resultados"
-    }
+       }
 });
 
 $(document).ready(function () {

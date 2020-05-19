@@ -95,8 +95,13 @@
         </div><!-- /.card-body -->
 
         <div class="card-footer">
-            <a href="#" class="btn btn-outline-success" style="width: 400px" id="aprovarRdo">Aprovar</a>
-            <a href="{{ route('rdo') }}" class="btn btn-default float-right">Cancelar</a>
+            @if($rdo->autorizador)
+            <a href="{{route('rdo.alterastatus', $rdo->id )}}" class="btn btn-outline-danger" style="width: 400px">Reprovar</a>
+            @else
+            <a href="{{route('rdo.alterastatus', $rdo->id )}}" class="btn btn-outline-success" style="width: 400px">Aprovar</a>
+            @endif
+
+            <a href="{{ route('rdo') }}" class="btn btn-default float-right">Retornar</a>
         </div>
         <!-- /.card-footer -->
     </form>

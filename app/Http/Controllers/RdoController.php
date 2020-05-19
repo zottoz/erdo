@@ -51,6 +51,11 @@ class RdoController extends Controller
         if($request->ajax())
         {
 
+            if(!$request->itens)
+            {
+                return response()->json('Não informado itens', 500);
+            }
+
             $criadorId  =   Auth::id();
             $numeroRDO  =   $request->info[3] . '00'.(Rdo::count() + 1);
             $hoje       =   Carbon::now();

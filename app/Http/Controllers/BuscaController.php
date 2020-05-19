@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 
 use App\Contrato;
 use App\Empresa;
 use App\Ppu;
-
+use Illuminate\Support\Facades\App;
 
 class BuscaController extends Controller
 {
@@ -18,15 +19,23 @@ class BuscaController extends Controller
     {
         if($request->ajax())
         {
-            clock($request->termo, $request->contratoId, $request);
 
             if(!$request->contratoId)
             {
                 return response()->json([], 404); 
             }
 
-            $itens = Ppu::where('descricao', 'ilike', '%'. $request->termo . '%')
-                        ->where('contrato_id', $request->contratoId)->take(5)->get();
+            if(App::environment('local')) //mysql local
+            {
+                $itens = Ppu::where('descricao', 'like', '%'. $request->termo . '%')
+                ->where('contrato_id', $request->contratoId)->take(8)->get();    
+            }
+            else //postgres no heroku
+            {
+                $itens = Ppu::where('descricao', 'ilike', '%'. $request->termo . '%')
+                ->where('contrato_id', $request->contratoId)->take(5)->get();
+            }
+
             
             if(count($itens)>0)
             {
